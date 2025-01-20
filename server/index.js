@@ -8,18 +8,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-const cors = require("cors");
 app.use(cors({
-  origin: "quiz-app-w54j.vercel.app" // Replace with your frontend domain
+  origin: "https://quiz-app-w54j.vercel.app" // Use the full URL, including `https://`
 }));
-
-
 app.use(bodyParser.json());
 
-<<<<<<< HEAD
-// Serve Static Files from React Build
-app.use(express.static(path.join(__dirname, "build")));  // Updated path to the build folder
-=======
 // Serve Static Files from React App in Production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
@@ -29,14 +22,13 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../client/build/index.html"));
   });
 }
->>>>>>> 2c6ea31fddab233e48437be0adb6e370b6e64262
 
 // Health Check Endpoint
 app.get("/", (req, res) => {
   res.send({ message: "Server is running successfully!" });
 });
 
-// Quiz Questions Endpoint
+// Quiz Questions Endpoint with Caching
 let cachedQuestions = null;
 let cacheTimestamp = 0;
 const CACHE_EXPIRATION_TIME = 30 * 60 * 1000; // Cache for 30 minutes
@@ -60,15 +52,8 @@ app.get("/api/questions", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-// Fallback Route for React App
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
-
-=======
->>>>>>> 2c6ea31fddab233e48437be0adb6e370b6e64262
 // Start the Server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
+
