@@ -8,9 +8,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-  origin: "https://quiz-app-w54j-iaec83x4j-kanhaiya-kumars-projects-e74c7e66.vercel.app/" // Use the full URL, including `https://`
-}));
+app.use(
+  cors({
+    origin: true, // Allow all origins (use specific domains for security)
+    methods: ["POST", "GET"], // Allow only POST and GET methods
+    credentials: true, // Allow credentials (cookies, authorization headers)
+  })
+);
 app.use(bodyParser.json());
 
 // Serve Static Files from React App in Production
