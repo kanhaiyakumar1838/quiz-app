@@ -11,8 +11,15 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve Static Files from React App
-app.use(express.static(path.join(__dirname, "../client/build")));
+// Serve Static Files from React App in Production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+
+  // Fallback route to serve React's index.html
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  });
+}
 
 // Health Check Endpoint
 app.get("/", (req, res) => {
@@ -41,11 +48,6 @@ app.get("/api/questions", async (req, res) => {
     console.error("Error fetching quiz data:", err.message);
     res.status(500).send({ error: "Failed to fetch quiz data." });
   }
-});
-
-// Fallback Route for React App
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 // Start the Server
