@@ -33,7 +33,7 @@ let cachedQuestions = null;
 let cacheTimestamp = 0;
 const CACHE_EXPIRATION_TIME = 30 * 60 * 1000; // Cache for 30 minutes
 
-app.get("/api/questions", async (req, res) => {
+app.get("https://quiz-app-w54j-iaec83x4j-kanhaiya-kumars-projects-e74c7e66.vercel.app/api/questions", async (req, res) => {
   const currentTime = Date.now();
 
   // Check if cached data is still valid
