@@ -53,7 +53,7 @@ app.get("https://quiz-app-w54j-iaec83x4j-kanhaiya-kumars-projects-e74c7e66.verce
 });
 
 // Start the Server
-app.listen(PORT, () => {
+app.listen(https://quiz-app-w54j-iaec83x4j-kanhaiya-kumars-projects-e74c7e66.vercel.app/, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
