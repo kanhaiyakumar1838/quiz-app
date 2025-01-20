@@ -15,15 +15,16 @@ const QuizPage = () => {
 
   useEffect(() => {
     axios
-      .get("https://quiz-app-w54j-iaec83x4j-kanhaiya-kumars-projects-e74c7e66.vercel.app/api/questions")
-      .then((response) => {
-        setQuestions(response.data);
-        localStorage.setItem("quizQuestions", JSON.stringify(response.data));
-      })
-      .catch((err) => {
-        setErrorMessage("Failed to fetch quiz questions. Please try again.");
-        console.error(err);
-      });
+  .get("https://ultimate-quiz-back.vercel.app/api/questions")
+  .then((response) => {
+    setQuestions(response.data);
+    localStorage.setItem("quizQuestions", JSON.stringify(response.data));
+  })
+  .catch((err) => {
+    setErrorMessage("Failed to fetch quiz questions. Please try again.");
+    console.error(err);
+  });
+
   }, []);
 
   const handleAnswer = (questionIndex, answer) => {
