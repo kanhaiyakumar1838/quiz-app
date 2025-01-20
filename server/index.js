@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(
   cors({
-    origin: true, // Allow all origins (use specific domains for security)
+    origin: https://quiz-app-w54j.vercel.app/, // Allow all origins (use specific domains for security)
     methods: ["POST", "GET"], // Allow only POST and GET methods
     credentials: true, // Allow credentials (cookies, authorization headers)
   })
