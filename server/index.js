@@ -10,22 +10,12 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(
   cors({
-    origin: true, // Allow all origins (use specific domains for security)
-    methods: ["POST", "GET"], // Allow only POST and GET methods
-    credentials: true, // Allow credentials (cookies, authorization headers)
+    origin: "https://quiz-app-w54j.vercel.app", // Allow specific frontend domain
+    methods: ["GET", "POST"], // Allow only GET and POST
+    credentials: true,
   })
 );
 app.use(bodyParser.json());
-
-// Serve Static Files from React App in Production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
-
-  // Fallback route to serve React's index.html
- /* app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
-  });
-}*/
 
 // Health Check Endpoint
 app.get("/", (req, res) => {
@@ -37,7 +27,7 @@ let cachedQuestions = null;
 let cacheTimestamp = 0;
 const CACHE_EXPIRATION_TIME = 30 * 60 * 1000; // Cache for 30 minutes
 
-app.get("https://quiz-app-w54j-iaec83x4j-kanhaiya-kumars-projects-e74c7e66.vercel.app/api/questions", async (req, res) => {
+app.get("/api/questions", async (req, res) => {
   const currentTime = Date.now();
 
   // Check if cached data is still valid
@@ -57,7 +47,8 @@ app.get("https://quiz-app-w54j-iaec83x4j-kanhaiya-kumars-projects-e74c7e66.verce
 });
 
 // Start the Server
-app.listen(https://quiz-app-w54j-iaec83x4j-kanhaiya-kumars-projects-e74c7e66.vercel.app/, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
 
