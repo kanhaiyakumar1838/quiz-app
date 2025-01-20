@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve Static Files from React App
-app.use(express.static(path.join(__dirname, "../client/build")));
+// Serve Static Files from React Build
+app.use(express.static(path.join(__dirname, "build")));  // Updated path to the build folder
 
 // Health Check Endpoint
 app.get("/", (req, res) => {
@@ -45,12 +45,10 @@ app.get("/api/questions", async (req, res) => {
 
 // Fallback Route for React App
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 // Start the Server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-  console.log("Health check: Visit http://localhost:5000/ to verify server status.");
-  console.log("Quiz API: Visit http://localhost:5000/api/questions to fetch quiz data.");
 });
