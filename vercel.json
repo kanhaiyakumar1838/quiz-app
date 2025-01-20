@@ -20,4 +20,10 @@
       "dest": "/client/build/$1"
     }
   ]
+<<<<<<< HEAD
 }
+=======
+}
+
+
+>>>>>>> 2c6ea31fddab233e48437be0adb6e370b6e64262
