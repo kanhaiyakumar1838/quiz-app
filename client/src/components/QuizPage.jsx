@@ -14,7 +14,7 @@ const QuizPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/questions")
+    axios.get("ultimate-quiz-back.vercel.app/api/questions")
       .then((response) => {
         setQuestions(response.data);
         localStorage.setItem("quizQuestions", JSON.stringify(response.data)); // Save to localStorage
