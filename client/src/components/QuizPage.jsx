@@ -14,14 +14,17 @@ const QuizPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("ultimate-quiz-back.vercel.app/api/questions")
+    axios
+      .get("https://ultimate-quiz-back.vercel.app/api/questions")
       .then((response) => {
         setQuestions(response.data);
-        localStorage.setItem("quizQuestions", JSON.stringify(response.data)); // Save to localStorage
+        localStorage.setItem("quizQuestions", JSON.stringify(response.data));
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setErrorMessage("Failed to fetch quiz questions. Please try again.");
+        console.error(err);
+      });
   }, []);
-  
 
   const handleAnswer = (questionIndex, answer) => {
     setAnswers({ ...answers, [questionIndex]: answer });
@@ -53,10 +56,16 @@ const QuizPage = () => {
   if (!questions.length) return <div className="loading">Loading...</div>;
 
   const currentQuestion = questions[currentQuestionIndex];
+  if (!currentQuestion) {
+    return <div className="error-message">Invalid question data.</div>;
+  }
+
   const options = [
     currentQuestion.correct_answer,
-    ...currentQuestion.incorrect_answers,
-  ].sort();
+    ...(Array.isArray(currentQuestion.incorrect_answers)
+      ? currentQuestion.incorrect_answers
+      : []),
+  ].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
 
   return (
     <div className="quiz-container">
@@ -129,3 +138,4 @@ const QuizPage = () => {
 };
 
 export default QuizPage;
+
