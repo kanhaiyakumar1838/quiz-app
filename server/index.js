@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: "https://quiz-app-w54j.vercel.app" // Use the full URL, including `https://`
+  origin: "https://quiz-app-w54j-iaec83x4j-kanhaiya-kumars-projects-e74c7e66.vercel.app/" // Use the full URL, including `https://`
 }));
 app.use(bodyParser.json());
 
