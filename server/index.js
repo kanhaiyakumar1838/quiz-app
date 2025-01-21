@@ -6,42 +6,43 @@ const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const CACHE_EXPIRATION_TIME = process.env.CACHE_EXPIRATION_TIME || 30 * 60 * 1000;
+const allowedOrigins = process.env.ALLOWED_ORIGINS || "https://quiz-app-w54j.vercel.app";
+
+let cachedQuestions = null;
+let cacheTimestamp = 0;
 
 // Middleware
-app.use(
-  cors({
-    origin: "https://quiz-app-w54j.vercel.app", // Allow specific frontend domain
-    methods: ["GET", "POST"], // Allow only GET and POST
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: allowedOrigins.split(","),
+  methods: ["GET", "POST"],
+  credentials: true,
+}));
 app.use(bodyParser.json());
 
-// Serve Static Files from React App in Production
+// Serve Static Files
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
-
-  // Fallback route to serve React's index.html
+  app.use(express.static(path.resolve(__dirname, "../client/build")));
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
   });
 }
 
-// Health Check Endpoint
+// Health Check
 app.get("/", (req, res) => {
-  res.send({ message: "Server is running successfully!" });
+  res.send({
+    message: "Server is running successfully!",
+    uptime: process.uptime(),
+    timestamp: new Date(),
+  });
 });
 
-// Quiz Questions Endpoint with Caching
-let cachedQuestions = null;
-let cacheTimestamp = 0;
-const CACHE_EXPIRATION_TIME = 30 * 60 * 1000; // Cache for 30 minutes
-
+// Quiz Questions Endpoint
 app.get("/api/questions", async (req, res) => {
   const currentTime = Date.now();
 
-  // Check if cached data is still valid
   if (cachedQuestions && currentTime - cacheTimestamp < CACHE_EXPIRATION_TIME) {
+    console.log("Serving questions from cache");
     return res.json(cachedQuestions);
   }
 
@@ -49,6 +50,7 @@ app.get("/api/questions", async (req, res) => {
     const response = await axios.get("https://opentdb.com/api.php?amount=15");
     cachedQuestions = response.data.results;
     cacheTimestamp = currentTime;
+    console.log("Fetched new questions from API");
     res.json(cachedQuestions);
   } catch (err) {
     console.error("Error fetching quiz data:", err.message);
@@ -56,7 +58,24 @@ app.get("/api/questions", async (req, res) => {
   }
 });
 
-// Start the Server
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.error("Unhandled Error:", err.message);
+  res.status(err.status || 500).send({ error: "Something went wrong. Please try again later." });
+});
+
+// Graceful Shutdown
+process.on("SIGINT", () => {
+  console.log("Shutting down server...");
+  process.exit(0);
+});
+process.on("SIGTERM", () => {
+  console.log("Server terminated!");
+  process.exit(0);
+});
+
+// Start Server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  const environment = process.env.NODE_ENV || "development";
+  console.log(`Server is running in ${environment} mode on port ${PORT}`);
 });
