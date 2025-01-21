@@ -1,4 +1,4 @@
-# Quiz Application
+<h1 align="left">Quiz Application</h1>
 
 ## Overview
 
