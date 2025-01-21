@@ -15,7 +15,7 @@ const QuizPage = () => {
 
   useEffect(() => {
     axios
-  .get("https://ultimate-quiz-back.vercel.app/api/questions")
+  .get("ultimate-quiz-back.vercel.app/api/questions")
   .then((response) => {
     setQuestions(response.data);
     localStorage.setItem("quizQuestions", JSON.stringify(response.data));
