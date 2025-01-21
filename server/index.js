@@ -17,6 +17,13 @@ app.use(
 );
 app.use(bodyParser.json());
 
+<<<<<<< HEAD
+=======
+/*<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8ba27f9 (Initial server setup for deployment)
+>>>>>>> 1df40fc (Resolved merge conflict in server/index.js)
 // Serve Static Files from React App in Production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
@@ -27,6 +34,11 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 63d6bc7c94296122b57fa98f97f47cadd8e2d952*/
+>>>>>>> 1df40fc (Resolved merge conflict in server/index.js)
 // Health Check Endpoint
 app.get("/", (req, res) => {
   res.send({ message: "Server is running successfully!" });
