@@ -17,7 +17,7 @@ app.use(
 );
 app.use(bodyParser.json());
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 // Serve Static Files from React App in Production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 =======
->>>>>>> 63d6bc7c94296122b57fa98f97f47cadd8e2d952
+>>>>>>> 63d6bc7c94296122b57fa98f97f47cadd8e2d952*/
 // Health Check Endpoint
 app.get("/", (req, res) => {
   res.send({ message: "Server is running successfully!" });
