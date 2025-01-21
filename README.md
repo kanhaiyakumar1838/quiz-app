@@ -1,31 +1,22 @@
-<h1 align="left">Quiz Application</h1>
+# Quiz Application
 
 ## Overview
+This Quiz Application is designed to provide users with a set of questions and track their answers. It consists of two main parts:
 
-This is a **Quiz Application** designed to allow users to take a quiz with multiple-choice questions. The application fetches quiz data from an external API (Open Trivia Database), displays questions, and tracks the user's answers. Upon completion, the user can submit their answers, and the results are stored in local storage.
+1. **Frontend**: A React-based web application that interacts with the backend API to fetch quiz questions and submit user answers.
+2. **Backend**: A Node.js-based server that provides the quiz data and handles requests from the frontend.
 
-### Features:
-- Fetches quiz questions from the Open Trivia API.
-- Displays each question with multiple-choice answers.
-- Tracks user answers and stores them in local storage.
-- Provides a timer to limit the time taken to answer.
-- Navigates to a report page after quiz submission.
+The application offers users a simple and interactive interface to take quizzes and view results. Users can answer the questions, navigate between them, and submit their answers. 
 
-## Approach
+## Features
+- Timer to limit the duration for answering each quiz.
+- Navigate between questions (Next and Previous buttons).
+- Submit answers and view results.
 
-The approach for this application follows these steps:
-1. **Fetching Data**: I used the Open Trivia API to fetch quiz questions. Axios is used to send HTTP requests to the API.
-2. **State Management**: React’s `useState` and `useEffect` hooks are used to manage the state of quiz questions, user answers, and the loading state.
-3. **Timer**: A custom `Timer` component is included to handle the quiz countdown, which triggers the submission of answers once the time runs out.
-4. **Routing**: React Router is used to navigate between pages like the quiz page and the report page.
-5. **Error Handling**: There is error handling in place to catch any issues during data fetching or if the API rate limits are exceeded.
-
-## Components
-
-- **QuizPage.jsx**: This is the main page of the quiz, where users interact with the questions. It fetches the quiz data, displays questions, and captures answers.
-- **Timer.jsx**: A countdown timer component that triggers the submission of the quiz when the time runs out.
-- **ReportPage.jsx**: After the quiz is completed, users are redirected to this page, where their answers are shown.
-- **API Integration**: Axios is used to fetch data from the Open Trivia API.
+## Technologies Used
+- **Frontend**: React, Axios, React Router
+- **Backend**: Node.js, Express
+- **Database**: In-memory data for simplicity (for demo purposes)
 
 ## Setup & Installation Instructions
 
@@ -41,32 +32,49 @@ The approach for this application follows these steps:
     cd quiz-app
     ```
 
-2. **Install Dependencies**:
-    ```bash
-    npm install
-    ```
+2. **Running the Frontend**:
+    - Navigate to the `client` directory:
+      ```bash
+      cd client
+      ```
+    - Install the necessary dependencies:
+      ```bash
+      npm install
+      ```
+    - Start the frontend:
+      ```bash
+      npm start
+      ```
 
-3. **Start the Application**:
-    ```bash
-    npm start
-    ```
+3. **Running the Backend**:
+    - Navigate to the `server` directory:
+      ```bash
+      cd ../server
+      ```
+    - Install the necessary dependencies:
+      ```bash
+      npm install
+      ```
+    - Start the backend:
+      ```bash
+      node index.js
+      ```
 
-4. Open your browser and navigate to `http://localhost:3000` to view the application.
+4. Open your browser and navigate to `http://localhost:3000` to view the frontend application, and ensure the backend is running at `http://localhost:5000`.
 
-## Assumptions Made
+## Assumptions
+- The backend API is hosted locally on `http://localhost:5000` and provides the necessary quiz data through the `/api/questions` endpoint.
+- The frontend is hosted on `http://localhost:3000` and communicates with the backend API to fetch and display quiz data.
 
-- The quiz data is being fetched from the Open Trivia API, which provides questions in a format compatible with this application.
-- The application assumes that the user has a working internet connection to fetch quiz data from the API.
-- Local storage is used for saving user answers, so they will persist within the session but will be lost if the user clears their browser history.
+## Challenges Faced and How I Overcame Them
+1. **Handling API Rate Limits**: During development, the Open Trivia API (used for fetching quiz questions) faced rate-limiting issues. To address this, I switched to using a local mock API for testing and later incorporated rate-limiting handling in production.
+2. **Timer Management**: Implementing a countdown timer that resets after each quiz and stops once time is up. The issue was resolved by using React's `useEffect` hook to manage the timer state.
+3. **Frontend-Backend Communication**: Ensuring seamless communication between the frontend and backend. I encountered issues with CORS, which were resolved by setting appropriate headers in the Express backend.
 
-## Challenges Faced and How They Were Overcome
+## Future Enhancements
+- Implement user authentication to track quiz history.
+- Improve the backend to handle larger question datasets.
+- Add user scores and feedback after quiz completion.
 
-1. **API Rate Limiting**: During development, I encountered issues with the Open Trivia API rate limit. To overcome this, I implemented a retry mechanism in the code with exponential backoff to handle rate limit errors more gracefully.
-
-2. **Error Handling for Missing Data**: At some point, the API did not return data in the expected format. I handled this by adding additional error checks to ensure the app fails gracefully and provides feedback to the user.
-
-3. **Timer Synchronization**: Synchronizing the timer with the quiz’s state was tricky, especially to handle edge cases when the user answers quickly or when there are network delays. I solved this by carefully coordinating the timer’s events with the state updates in the app.
-
-## Conclusion
-
-This project helped me understand the importance of handling API rate limits, using local storage for state persistence, and providing a smooth user experience with clear error messages and loading indicators. I plan to further enhance the app with additional features like score reporting, timed quizzes, and better user interface components.
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
