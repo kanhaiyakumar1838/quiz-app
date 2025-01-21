@@ -16,7 +16,7 @@ const QuizPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/questions")
+      .get("https://quiz-app-4-cubi.onrender.com/api/questions")
       .then((response) => {
         setQuestions(response.data);
         localStorage.setItem("quizQuestions", JSON.stringify(response.data));
