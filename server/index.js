@@ -89,3 +89,4 @@ app.listen(PORT, () => {
   const environment = process.env.NODE_ENV || "development";
   console.log(`Server is running in ${environment} mode on port ${PORT}`);
 });
+
