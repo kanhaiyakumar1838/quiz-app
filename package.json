@@ -2,7 +2,7 @@
   "name": "quiz-app",
   "version": "1.0.0",
   "description": "Quiz application with client and server",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
     "client": "npm start --prefix client",
@@ -26,3 +26,5 @@
     "styled-components": "^6.1.14"
   }
 }
+
+

@@ -23,12 +23,14 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // Serve Static Files
+// Remove or comment out this part
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.resolve(__dirname, "../client/build")));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
   });
 }
+
 
 // Health Check
 app.get("/", (req, res) => {
