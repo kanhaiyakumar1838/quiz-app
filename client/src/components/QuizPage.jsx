@@ -11,20 +11,20 @@ const QuizPage = () => {
   const [visitedQuestions, setVisitedQuestions] = useState(new Set());
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
   const [errorMessage, setErrorMessage] = useState("");
+  const [showModal, setShowModal] = useState(false); // state for showing modal
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-  .get("https://quiz-app-1p2x.onrender.com/api/questions")
-  .then((response) => {
-    setQuestions(response.data);
-    localStorage.setItem("quizQuestions", JSON.stringify(response.data));
-  })
-  .catch((err) => {
-    setErrorMessage("Failed to fetch quiz questions. Please try again.");
-    console.error(err);
-  });
-
+      .get("http://localhost:5000/api/questions")
+      .then((response) => {
+        setQuestions(response.data);
+        localStorage.setItem("quizQuestions", JSON.stringify(response.data));
+      })
+      .catch((err) => {
+        setErrorMessage("Failed to fetch quiz questions. Please try again.");
+        console.error(err);
+      });
   }, []);
 
   const handleAnswer = (questionIndex, answer) => {
@@ -34,6 +34,15 @@ const QuizPage = () => {
   const submitQuiz = () => {
     localStorage.setItem("quizAnswers", JSON.stringify(answers));
     navigate("/report");
+  };
+
+  const handleModalSubmit = () => {
+    submitQuiz();  // Submit the quiz
+    setShowModal(false);  // Close the modal
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false); // Close the modal if user clicks No
   };
 
   const navigateToQuestion = (index) => {
@@ -131,12 +140,28 @@ const QuizPage = () => {
           ))}
         </div>
       </div>
-      <button className="submit-button" onClick={submitQuiz}>
+      <button className="submit-button" onClick={() => setShowModal(true)}>
         Submit
       </button>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Are you sure you want to submit the quiz?</h3>
+            <div className="modal-buttons">
+              <button className="modal-button" onClick={handleModalSubmit}>
+                Yes
+              </button>
+              <button className="modal-button" onClick={handleModalClose}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default QuizPage;
-

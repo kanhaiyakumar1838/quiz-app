@@ -17,8 +17,8 @@ const StartPage = () => {
     }
 
     setEmailError(""); // Clear the error if email is valid
-    localStorage.setItem("email", email);
-    navigate("/quiz");
+    localStorage.setItem("email", email); // Store email in localStorage
+    navigate("/quiz"); // Navigate to quiz page
   };
 
   return (
@@ -32,7 +32,7 @@ const StartPage = () => {
           type="email"
           placeholder="Enter your email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)} // Update email on change
           className="start-page-input"
         />
         

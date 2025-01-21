@@ -7,7 +7,9 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const CACHE_EXPIRATION_TIME = process.env.CACHE_EXPIRATION_TIME || 30 * 60 * 1000;
-const allowedOrigins = process.env.ALLOWED_ORIGINS || "https://quiz-app-w54j.vercel.app";
+//const allowedOrigins = process.env.ALLOWED_ORIGINS || "https://quiz-app-w54j.vercel.app";
+const allowedOrigins = process.env.ALLOWED_ORIGINS || "http://localhost:3000,https://quiz-app-w54j.vercel.app";
+
 
 let cachedQuestions = null;
 let cacheTimestamp = 0;
